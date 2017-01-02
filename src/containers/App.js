@@ -15,17 +15,13 @@ class App extends Component {
     this.onClickStart = this.onClickStart.bind(this);
   }
 
-  onTimeChangeHandler() {
-
-  }
-
   onClickReset() {
     const { actions } = this.props;
     actions.resetTimer();
   }
 
   onClickPause() {
-    clearTimeout(this.playingTime);
+    clearInterval(this.playingTime);
     const { actions } = this.props;
     actions.pauseTimer();
   }
@@ -43,14 +39,14 @@ class App extends Component {
 
 
   render() {
-    const { timer } = this.props;
+    const { time, playing } = this.props;
 
     return (
       <div className="Scrum-App">
-        <input type="text" value={timer.time} readOnly={this.onTimeChangeHandler} />
+        <h1>{time >= 0 ? time : 0}</h1>
         <button type="button" onClick={this.onClickReset}>Reset</button>
-        {timer.playing && <button type="button" onClick={this.onClickPause}>Pause</button>}
-        {!timer.playing && <button type="button" onClick={this.onClickStart}>Start</button>}
+        {playing && time > 0 && <button type="button" onClick={this.onClickPause}>Pause</button>}
+        {!playing && time > 0 && <button type="button" onClick={this.onClickStart}>Start</button>}
       </div>
     );
 
@@ -59,7 +55,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    timer: state.timerReducer
+    time: state.timerReducer.time,
+    playing: state.timerReducer.playing
   }
 };
 

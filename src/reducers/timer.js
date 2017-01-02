@@ -3,7 +3,6 @@ export const initialState = {
   playing: false
 };
 
-
 function timerReducer(state = initialState, action) {
 
   switch (action.type) {
