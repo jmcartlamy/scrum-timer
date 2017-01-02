@@ -1,18 +1,45 @@
 import React, {Component} from 'react';
 
-import ExampleComponent from '../components/ExampleComponent.js'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as timerActions from '../actions/timerActions.js';
 
 class App extends Component {
 
+  onTimeChangeHandler() {
+
+  }
+
+
   render() {
+    const { timer } = this.props;
 
     return (
       <div className="Scrum-App">
-        <ExampleComponent />
+        <input type="text" value={timer} onChange={this.onTimeChangeHandler} />
+        <button type="button" value="">Reset</button>
+        <button type="button" value="">Pause</button>
+        <button type="button" value="">Start</button>
       </div>
     );
 
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    timer: state.timerReducer
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(timerActions, dispatch)
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

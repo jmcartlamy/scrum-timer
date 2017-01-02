@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import rootReducer from '../reducers';
 
 /*
     Creates a Redux store that holds the complete state tree of your app.
@@ -6,11 +7,10 @@ import { createStore } from 'redux';
     http://redux.js.org/docs/api/createStore.html
 */
 
-const reducer = () => {};
 const preloadedState = {};
 
 export default () => {
-  const store = createStore(reducer, preloadedState,
+  const store = createStore(rootReducer, preloadedState,
 
     /*
       DevTools for Redux with actions history, undo and replay.
