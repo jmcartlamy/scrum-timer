@@ -26,6 +26,8 @@ class App extends Component {
 
   onClickPause() {
     clearTimeout(this.playingTime);
+    const { actions } = this.props;
+    actions.pauseTimer();
   }
 
   onClickStart() {
@@ -45,10 +47,10 @@ class App extends Component {
 
     return (
       <div className="Scrum-App">
-        <input type="text" value={timer} readOnly={this.onTimeChangeHandler} />
+        <input type="text" value={timer.time} readOnly={this.onTimeChangeHandler} />
         <button type="button" onClick={this.onClickReset}>Reset</button>
-        <button type="button" onClick={this.onClickPause}>Pause</button>
-        <button type="button" onClick={this.onClickStart}>Start</button>
+        {timer.playing && <button type="button" onClick={this.onClickPause}>Pause</button>}
+        {!timer.playing && <button type="button" onClick={this.onClickStart}>Start</button>}
       </div>
     );
 

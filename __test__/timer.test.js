@@ -1,16 +1,61 @@
-import timer from '../src/reducers/timer.js';
+import timer, {initialState} from '../src/reducers/timer.js';
 
 test('initial state', () => {
-  expect(timer(undefined, { type: 'AZERTY' })).toBe(60);
+  expect(timer(undefined, { type: 'AZERTY' })).toEqual(initialState);
 });
 
 test('PLAY_TIMER', () => {
+  const state = {
+    playing: false,
+    time: 60
+  };
+  Object.freeze(state);
+
+  const actions = {
+    type: 'PLAY_TIMER',
+  };
+
   expect(
-    timer(60, { type: 'PLAY_TIMER' })).toBe(59);
+    timer(state, actions)
+  ).toEqual({
+    playing: true,
+    time: 59
+  })
+});
+
+test('PAUSE_TIMER', () => {
+  const state = {
+    playing: true,
+    time: 45
+  };
+  Object.freeze(state);
+
+  const actions = {
+    type: 'PAUSE_TIMER',
+  };
+
+  expect(
+    timer(state, actions)
+  ).toEqual({
+    playing: false,
+    time: 45
+  })
 });
 
 test('RESET_TIMER', () => {
+  const state = {
+    playing: true,
+    time: 23
+  };
+
+  const actions = {
+    type: 'RESET_TIMER',
+  };
+
   expect(
-    timer(23, { type: 'RESET_TIMER' })
-  ).toBe(60);
+    timer(state, actions)
+  ).toEqual({
+    playing: false,
+    time: 60
+  });
 });

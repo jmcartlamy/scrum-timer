@@ -5,8 +5,14 @@ export const playTimer = () => {
   }
 };
 
+export const pauseTimer = () => {
+  return {
+    type: 'PAUSE_TIMER',
+  }
+};
+
 export const resetTimer = () => {
   return {
     type: 'RESET_TIMER'
   }
-}
+};

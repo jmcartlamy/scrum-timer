@@ -1,13 +1,32 @@
+export const initialState = {
+  time: 60,
+  playing: false
+};
 
-function timerReducer(state = 60, action) {
+
+function timerReducer(state = initialState, action) {
 
   switch (action.type) {
     case 'PLAY_TIMER':
-      return state - 1;
+      return {
+        time: state.time - 1,
+        playing: true
+      };
+    case 'PAUSE_TIMER':
+      return {
+        time: state.time,
+        playing: false
+      };
     case 'RESET_TIMER':
-      return 60;
+      return {
+        time: 60,
+        playing: false
+      };
     default:
-      return 60;
+      return {
+        time: 60,
+        playing: false
+      };
   }
 
 }
