@@ -7,8 +7,36 @@ import * as timerActions from '../actions/timerActions.js';
 
 class App extends Component {
 
+  constructor() {
+    super();
+
+    this.onClickReset = this.onClickReset.bind(this);
+    this.onClickPause = this.onClickPause.bind(this);
+    this.onClickStart = this.onClickStart.bind(this);
+  }
+
   onTimeChangeHandler() {
 
+  }
+
+  onClickReset() {
+    const { actions } = this.props;
+    actions.resetTimer();
+  }
+
+  onClickPause() {
+    clearTimeout(this.playingTime);
+  }
+
+  onClickStart() {
+
+    const { actions } = this.props;
+
+    actions.playTimer();
+
+    this.playingTime = setInterval(() => {
+      actions.playTimer();
+    }, 1000);
   }
 
 
@@ -17,10 +45,10 @@ class App extends Component {
 
     return (
       <div className="Scrum-App">
-        <input type="text" value={timer} onChange={this.onTimeChangeHandler} />
-        <button type="button" value="">Reset</button>
-        <button type="button" value="">Pause</button>
-        <button type="button" value="">Start</button>
+        <input type="text" value={timer} readOnly={this.onTimeChangeHandler} />
+        <button type="button" onClick={this.onClickReset}>Reset</button>
+        <button type="button" onClick={this.onClickPause}>Pause</button>
+        <button type="button" onClick={this.onClickStart}>Start</button>
       </div>
     );
 

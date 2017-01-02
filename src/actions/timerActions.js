@@ -1,5 +1,5 @@
 
-export const playTimer = inputTime => {
+export const playTimer = () => {
   return {
     type: 'PLAY_TIMER',
   }
