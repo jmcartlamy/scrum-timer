@@ -43,7 +43,7 @@ test(PLAY_TIMER, () => {
   expect(
     timer(state, action)
   ).toEqual({
-    start: action.payload.date - (state.start - state.paused),
+    start: action.payload.date - (state.paused - state.start),
     paused: null
   })
 });
@@ -65,7 +65,7 @@ test(PAUSE_TIMER, () => {
   expect(
     timer(state, action)
   ).toEqual({
-    start: +new Date() - 15000,
+    start: state.start,
     paused: action.payload.date
   })
 });

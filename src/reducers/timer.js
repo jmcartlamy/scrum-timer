@@ -15,7 +15,7 @@ function timerReducer(state = initialState, action) {
         paused: null
       };
     case PLAY_TIMER:
-      const offset = state.start - state.paused;
+      const offset = state.paused - state.start;
       return {
         start: action.payload.date - offset,
         paused: null
