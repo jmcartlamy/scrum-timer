@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { START_NUMBER_SECONDS } from '../constants/';
 
 class Timer extends Component {
 
@@ -7,17 +8,21 @@ class Timer extends Component {
     const { start, paused } = this.props;
 
     if (!start) {
-      return 0;
+      return START_NUMBER_SECONDS;
     }
     const date = paused || +new Date();
-    console.log(date);
+    const time = Math.floor(START_NUMBER_SECONDS - ((date - start) / 1000));
 
-    return Math.floor((date - start) / 1000);
+    return time >= 0 ? time : 0;
   }
 
   render() {
+    const { start } = this.props;
+
     return (
-      <span className="container-timer__time centered">{this.renderTime()}</span>
+      <span className="container-timer__time centered">
+        {!start ? '01:00': this.renderTime()}
+      </span>
     )
   }
 }
