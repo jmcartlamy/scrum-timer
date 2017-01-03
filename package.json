@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "create-react-app-sass": "^1.1.0",
     "react-scripts": "0.8.4"
   },
   "dependencies": {
@@ -13,8 +12,8 @@
     "redux": "^3.6.0"
   },
   "scripts": {
-    "start": "react-scripts-with-sass start",
-    "build": "react-scripts-with-sass build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

@@ -14,4 +14,3 @@ build
 .env
 .idea
 npm-debug.log
-*.css
