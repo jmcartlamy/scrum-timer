@@ -10,54 +10,74 @@ class App extends Component {
   constructor() {
     super();
 
-    this.onClickReset = this.onClickReset.bind(this);
-    this.onClickPause = this.onClickPause.bind(this);
+    this.tick = this.tick.bind(this);
     this.onClickStart = this.onClickStart.bind(this);
+    this.onClickPause = this.onClickPause.bind(this);
+    this.onClickPlay = this.onClickPlay.bind(this);
   }
 
-  onClickReset() {
-    const { actions } = this.props;
-    actions.resetTimer();
-  }
-
-  onClickPause() {
-    clearInterval(this.playingTime);
-    const { actions } = this.props;
-    actions.pauseTimer();
+  tick() {
+    clearInterval(this.updateComponent);
+    this.updateComponent = setInterval(this.forceUpdate.bind(this), 100);
   }
 
   onClickStart() {
-
     const { actions } = this.props;
-
-    actions.playTimer();
-
-    this.playingTime = setInterval(() => {
-      actions.playTimer();
-    }, 1000);
+    actions.startTimer();
+    this.tick();
   }
 
+  onClickPlay() {
+    const { actions } = this.props;
+    actions.playTimer();
+    this.tick();
+  }
+
+  onClickPause() {
+    const { actions } = this.props;
+    actions.pauseTimer();
+    clearInterval(this.updateComponent);
+  }
+
+  renderTime() {
+
+    const { start, paused } = this.props;
+
+    if (!start) {
+      return 0;
+    }
+    const date = paused || +new Date();
+    console.log(date);
+
+    return Math.floor((date - start) / 1000);
+  }
 
   render() {
-    const { time, playing } = this.props;
+    const { start, paused } = this.props;
 
     return (
       <div className="scrum-app">
         <div className="container-timer centered">
-          <span className="container-timer__time centered">{time >= 0 ? time : 0}</span>
+          <span className="container-timer__time centered">{this.renderTime()}</span>
         </div>
         <div className="container-buttons">
+
           <div className="container-buttons__grid-1-2">
-            <button type="button" onClick={this.onClickReset} className="container-buttons__grid-1-2__button">Reset</button>
-        </div>
-          {time > 0 &&
-          <div className="container-buttons__grid-1-2">
-              <button type="button" onClick={this.onClickStart} className="container-buttons__grid-1-2__button">Start</button>
+            <button type="button" onClick={this.onClickStart} className="container-buttons__grid-1-2__button">
+              {start ? 'Next' : 'Start'}
+            </button>
           </div>
-          }
-          {playing && time < 0 &&
-            <button type="button" onClick={this.onClickPause} className="container-buttons__button">Pause</button>
-          }
+
+          <div className="container-buttons__grid-1-2">
+            {paused ?
+              <button type="button" onClick={this.onClickPlay} className="container-buttons__grid-1-2__button">
+                Play
+              </button> :
+              <button type="button" onClick={this.onClickPause} className="container-buttons__grid-1-2__button">
+                Pause
+              </button>
+            }
+          </div>
 
         </div>
       </div>
@@ -68,8 +88,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    time: state.timerReducer.time,
-    playing: state.timerReducer.playing
+    start: state.timerReducer.start,
+    paused: state.timerReducer.paused
   }
 };
 
