@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import cs from 'classnames';
 
 import * as timerActions from '../actions/timerActions.js';
 
@@ -55,6 +56,13 @@ class App extends Component {
   render() {
     const { start, paused } = this.props;
 
+    const startCSSClassnames = cs(
+      {
+        'container-buttons__grid-1-1': !start,
+        'container-buttons__grid-1-2': start
+      }
+    );
+
     return (
       <div className="scrum-app">
         <div className="container-timer centered">
@@ -62,12 +70,12 @@ class App extends Component {
         </div>
         <div className="container-buttons">
 
-          <div className="container-buttons__grid-1-2">
+          <div className={startCSSClassnames}>
             <button type="button" onClick={this.onClickStart} className="container-buttons__grid-1-2__button">
               {start ? 'Next' : 'Start'}
             </button>
           </div>
-
+          { start &&
           <div className="container-buttons__grid-1-2">
             {paused ?
               <button type="button" onClick={this.onClickPlay} className="container-buttons__grid-1-2__button">
@@ -78,6 +86,7 @@ class App extends Component {
               </button>
             }
           </div>
+          }
 
         </div>
       </div>
