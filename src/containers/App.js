@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import cs from 'classnames';
 
+import Timer from '../components/Timer.js';
 import * as timerActions from '../actions/timerActions.js';
 
 class App extends Component {
@@ -40,19 +41,6 @@ class App extends Component {
     clearInterval(this.updateComponent);
   }
 
-  renderTime() {
-
-    const { start, paused } = this.props;
-
-    if (!start) {
-      return 0;
-    }
-    const date = paused || +new Date();
-    console.log(date);
-
-    return Math.floor((date - start) / 1000);
-  }
-
   render() {
     const { start, paused } = this.props;
 
@@ -66,7 +54,7 @@ class App extends Component {
     return (
       <div className="scrum-app">
         <div className="container-timer centered">
-          <span className="container-timer__time centered">{this.renderTime()}</span>
+          <Timer {...this.props} />
         </div>
         <div className="container-buttons">
 
