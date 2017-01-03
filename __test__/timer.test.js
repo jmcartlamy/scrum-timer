@@ -1,10 +1,11 @@
 import timer, {initialState} from '../src/reducers/timer.js';
+import { PLAY_TIMER, PAUSE_TIMER, RESET_TIMER } from '../src/constants/';
 
 test('initial state', () => {
   expect(timer(undefined, { type: 'AZERTY' })).toEqual(initialState);
 });
 
-test('PLAY_TIMER', () => {
+test(PLAY_TIMER, () => {
   const state = {
     playing: false,
     time: 60
@@ -12,7 +13,7 @@ test('PLAY_TIMER', () => {
   Object.freeze(state);
 
   const actions = {
-    type: 'PLAY_TIMER',
+    type: PLAY_TIMER,
   };
 
   expect(
@@ -23,7 +24,7 @@ test('PLAY_TIMER', () => {
   })
 });
 
-test('PAUSE_TIMER', () => {
+test(PAUSE_TIMER, () => {
   const state = {
     playing: true,
     time: 45
@@ -31,7 +32,7 @@ test('PAUSE_TIMER', () => {
   Object.freeze(state);
 
   const actions = {
-    type: 'PAUSE_TIMER',
+    type: PAUSE_TIMER,
   };
 
   expect(
@@ -42,14 +43,14 @@ test('PAUSE_TIMER', () => {
   })
 });
 
-test('RESET_TIMER', () => {
+test(RESET_TIMER, () => {
   const state = {
     playing: true,
     time: 23
   };
 
   const actions = {
-    type: 'RESET_TIMER',
+    type: RESET_TIMER,
   };
 
   expect(
