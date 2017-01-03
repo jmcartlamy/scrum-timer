@@ -59,17 +59,17 @@ class App extends Component {
         <div className="container-buttons">
 
           <div className={startCSSClassnames}>
-            <button type="button" onClick={this.onClickStart} className="container-buttons__grid-1-2__button">
+            <button type="button" onClick={this.onClickStart} className="container-buttons__grid-1-2__button button-start">
               {start ? 'Next' : 'Start'}
             </button>
           </div>
           { start &&
           <div className="container-buttons__grid-1-2">
             {paused ?
-              <button type="button" onClick={this.onClickPlay} className="container-buttons__grid-1-2__button">
+              <button type="button" onClick={this.onClickPlay} className="container-buttons__grid-1-2__button button-play">
                 Play
               </button> :
-              <button type="button" onClick={this.onClickPause} className="container-buttons__grid-1-2__button">
+              <button type="button" onClick={this.onClickPause} className="container-buttons__grid-1-2__button button-pause">
                 Pause
               </button>
             }
