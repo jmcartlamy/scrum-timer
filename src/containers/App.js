@@ -42,11 +42,24 @@ class App extends Component {
     const { time, playing } = this.props;
 
     return (
-      <div className="Scrum-App">
-        <h1>{time >= 0 ? time : 0}</h1>
-        <button type="button" onClick={this.onClickReset}>Reset</button>
-        {playing && time > 0 && <button type="button" onClick={this.onClickPause}>Pause</button>}
-        {!playing && time > 0 && <button type="button" onClick={this.onClickStart}>Start</button>}
+      <div className="scrum-app">
+        <div className="container-timer centered">
+          <span className="container-timer__time centered">{time >= 0 ? time : 0}</span>
+        </div>
+        <div className="container-buttons">
+          <div className="container-buttons__grid-1-2">
+            <button type="button" onClick={this.onClickReset} className="container-buttons__grid-1-2__button">Reset</button>
+        </div>
+          {time > 0 &&
+          <div className="container-buttons__grid-1-2">
+              <button type="button" onClick={this.onClickStart} className="container-buttons__grid-1-2__button">Start</button>
+          </div>
+          }
+          {playing && time < 0 &&
+            <button type="button" onClick={this.onClickPause} className="container-buttons__button">Pause</button>
+          }
+
+        </div>
       </div>
     );
 

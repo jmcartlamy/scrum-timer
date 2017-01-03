@@ -1,9 +1,93 @@
-body {
+$background-color-green: #43a047;
+
+$time-background-color: #f5f5f5;
+$time-text-color: #43a047;
+
+$button-background-color: #f5f5f5;
+
+$button-start-color: #fff;
+$button-next-color: #fff;
+$button-play-color: #fff;
+$button-pause-color: #fff;
+
+* {
+  border: 0;
   margin: 0;
+  outline-style: none;
   padding: 0;
-  font-family: sans-serif;
 }
 
-.Scrum-App {
+html,
+body,
+.root,
+.scrum-app {
+  font-size: 62.5%;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scrum-app {
+  background-color: $background-color-green;
   text-align: center;
 }
+
+.container-timer {
+  height: 70%;
+
+  &__time {
+    background-color: $time-background-color;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 8px 10px rgba(0,0,0,0.18);
+    color: $time-text-color;
+    font-size: 8rem;
+    height: 25rem;
+    width: 25rem;
+  }
+}
+
+.container-buttons {
+  bottom: 0;
+  height: 30%;
+  width: 100%;
+
+  &__grid-1-2 {
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+
+    &__button {
+      background-color: $button-background-color;
+      border-radius: 1rem;
+      box-shadow: 0 8px 10px rgba(0,0,0,0.18);
+      cursor: pointer;
+      font-size: 2rem;
+      height: 80%;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      width: 80%;
+    }
+
+    &__button:active {
+      top: 5px;
+    }
+
+  }
+
+}
+
