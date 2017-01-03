@@ -1,62 +1,71 @@
 import timer, {initialState} from '../src/reducers/timer.js';
-import { PLAY_TIMER, PAUSE_TIMER, RESET_TIMER } from '../src/constants/';
+import { PLAY_TIMER, PAUSE_TIMER, START_TIMER } from '../src/constants/';
 
 test('initial state', () => {
   expect(timer(undefined, { type: 'AZERTY' })).toEqual(initialState);
 });
 
-test(PLAY_TIMER, () => {
+test(START_TIMER, () => {
   const state = {
-    playing: false,
-    time: 60
+    start: null,
+    paused: null
   };
-  Object.freeze(state);
 
-  const actions = {
-    type: PLAY_TIMER,
+  const action = {
+    type: START_TIMER,
+    payload: {
+      date: +new Date()
+    }
   };
 
   expect(
-    timer(state, actions)
+    timer(state, action)
   ).toEqual({
-    playing: true,
-    time: 59
+    start: action.payload.date,
+    paused: null
+  });
+});
+
+test(PLAY_TIMER, () => {
+  const state = {
+    start: +new Date() - 9000,
+    paused: +new Date() - 4000
+  };
+  Object.freeze(state);
+
+  const action = {
+    type: PLAY_TIMER,
+    payload: {
+      date: +new Date()
+    }
+  };
+
+  expect(
+    timer(state, action)
+  ).toEqual({
+    start: action.payload.date - (state.start - state.paused),
+    paused: null
   })
 });
 
 test(PAUSE_TIMER, () => {
   const state = {
-    playing: true,
-    time: 45
+    start: +new Date() - 15000,
+    paused: 60
   };
   Object.freeze(state);
 
-  const actions = {
+  const action = {
     type: PAUSE_TIMER,
+    payload: {
+      date: +new Date()
+    }
   };
 
   expect(
-    timer(state, actions)
+    timer(state, action)
   ).toEqual({
-    playing: false,
-    time: 45
+    start: +new Date() - 15000,
+    paused: action.payload.date
   })
-});
-
-test(RESET_TIMER, () => {
-  const state = {
-    playing: true,
-    time: 23
-  };
-
-  const actions = {
-    type: RESET_TIMER,
-  };
-
-  expect(
-    timer(state, actions)
-  ).toEqual({
-    playing: false,
-    time: 60
-  });
 });

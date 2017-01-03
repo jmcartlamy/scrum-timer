@@ -1,30 +1,34 @@
+import { PLAY_TIMER, PAUSE_TIMER, START_TIMER } from '../constants/';
+
 export const initialState = {
-  time: 60,
-  playing: false
+  start: null,
+  paused: null
 };
 
 function timerReducer(state = initialState, action) {
 
   switch (action.type) {
-    case 'PLAY_TIMER':
+
+    case START_TIMER:
       return {
-        time: state.time - 1,
-        playing: true
+        start: action.payload.date,
+        paused: null
       };
-    case 'PAUSE_TIMER':
+    case PLAY_TIMER:
+      const offset = state.start - state.paused;
       return {
-        time: state.time,
-        playing: false
+        start: action.payload.date - offset,
+        paused: null
       };
-    case 'RESET_TIMER':
+    case PAUSE_TIMER:
       return {
-        time: 60,
-        playing: false
+        start: state.start,
+        paused: action.payload.date
       };
     default:
       return {
-        time: 60,
-        playing: false
+        start: null,
+        paused: null
       };
   }
 
