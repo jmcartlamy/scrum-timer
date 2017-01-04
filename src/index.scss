@@ -1,13 +1,18 @@
-$background-color-green: #43a047;
+$color-green: #43a047;
+$color-yellow: #FBC02D;
+$color-red: #f44336;
+$color-white: #f5f5f5;
+$color-blue: #2196f3;
 
-$time-background-color: #f5f5f5;
-$time-text-color: #43a047;
+$time-background-color: $color-white;
 
-$button-background-color: #f5f5f5;
+$overtime-text-color: $color-white;
 
-$button-start-color: #2196F3;
-$button-play-color: #4CAF50;
-$button-pause-color: #FF9800;
+$button-background-color: $color-white;
+
+$button-start-color: $color-blue;
+$button-play-color: $color-green;
+$button-pause-color: $color-yellow;
 
 * {
   border: 0;
@@ -35,62 +40,99 @@ body {
   justify-content: center;
 }
 
+.grid-1-2 {
+  width: 50%;
+}
+
+.grid-1-1 {
+  width: 100%;
+}
+
 .scrum-app {
-  background-color: $background-color-green;
   text-align: center;
 }
 
-.container-timer {
-  height: 70%;
+.background-green {
+  background-color: $color-green;
+}
 
-  &__time {
-    background-color: $time-background-color;
-    border: 1px solid #fff;
-    border-radius: 50%;
-    box-shadow: 0 8px 10px rgba(0,0,0,0.18);
-    color: $time-text-color;
-    font-size: 8rem;
-    height: 25rem;
-    width: 25rem;
+.background-yellow {
+  background-color: $color-yellow;
+}
+
+.background-red {
+  background-color: $color-red;
+}
+
+.color-green {
+  color: $color-green;
+}
+
+.color-yellow {
+  color: $color-yellow;
+}
+
+.color-red {
+  color: $color-red;
+}
+
+.wrapper-timer {
+  height: 70%;
+}
+
+.container-timer {
+  height: 100%;
+
+  &__containerTime {
+    height: 70%;
+    align-items: flex-end;
+
+    &__time {
+      background-color: $time-background-color;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 8px 10px rgba(0, 0, 0, 0.18);
+      font-size: 8rem;
+      height: 25rem;
+      width: 25rem;
+    }
+  }
+  &__containerOvertime {
+    height: 30%;
+
+    &__overtime {
+      color: $overtime-text-color;
+      font-size: 2rem;
+    }
   }
 }
 
-.container-buttons {
+.wrapper-buttons {
   bottom: 0;
   height: 30%;
   width: 100%;
+}
 
-  &__grid-1-2 {
-    width: 50%;
+.container-buttons {
+  height: 100%;
+  display: inline-flex;
+
+  &__button {
+    background-color: $button-background-color;
+    border-radius: 1rem;
+    box-shadow: 0 8px 10px rgba(0,0,0,0.18);
+    cursor: pointer;
+    font-size: 2rem;
+    height: 80%;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    width: 80%;
   }
 
-  &__grid-1-1 {
-    width: 100%;
-  }
-
-  &__grid-1-2, &__grid-1-1 {
-    align-items: center;
-    display: inline-flex;
-    height: 100%;
-    justify-content: center;
-
-    &__button {
-      background-color: $button-background-color;
-      border-radius: 1rem;
-      box-shadow: 0 8px 10px rgba(0,0,0,0.18);
-      cursor: pointer;
-      font-size: 2rem;
-      height: 80%;
-      position: relative;
-      text-align: center;
-      text-decoration: none;
-      user-select: none;
-      width: 80%;
-    }
-
-    &__button:active {
-      top: 5px;
-    }
+  &__button:active {
+    top: 5px;
   }
 }
 

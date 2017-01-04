@@ -6,6 +6,7 @@ import cs from 'classnames';
 
 import Timer from '../components/Timer.js';
 import * as timerActions from '../actions/timerActions.js';
+import * as allottedTimeActions from '../actions/allottedTimeActions.js';
 
 class App extends Component {
 
@@ -24,52 +25,65 @@ class App extends Component {
   }
 
   onClickStart() {
-    const { actions } = this.props;
-    actions.startTimer();
+    const { timerActions, allottedTimeActions, exceed } = this.props;
+    timerActions.startTimer();
+    if (exceed) {
+      allottedTimeActions.resetTime();
+    }
     this.tick();
   }
 
   onClickPlay() {
-    const { actions } = this.props;
-    actions.playTimer();
+    const { timerActions } = this.props;
+    timerActions.playTimer();
     this.tick();
   }
 
   onClickPause() {
-    const { actions } = this.props;
-    actions.pauseTimer();
+    const { timerActions } = this.props;
+    timerActions.pauseTimer();
     clearInterval(this.updateComponent);
   }
 
   render() {
-    const { start, paused } = this.props;
+    const { start, paused, exceed } = this.props;
 
     const startCSSClassnames = cs(
+      'container-buttons centered',
       {
-        'container-buttons__grid-1-1': !start,
-        'container-buttons__grid-1-2': start
+        'grid-1-1': !start,
+        'grid-1-2': start
+      }
+    );
+
+    const scrumAppCSSClassnames = cs(
+      'scrum-app',
+      {
+        'background-green': !paused && !exceed,
+        'background-yellow': paused && !exceed,
+        'background-red': exceed
       }
     );
 
     return (
-      <div className="scrum-app">
-        <div className="container-timer centered">
+      <div className={scrumAppCSSClassnames}>
+        <div className="wrapper-timer centered">
           <Timer {...this.props} />
         </div>
-        <div className="container-buttons">
+        <div className="wrapper-buttons">
 
           <div className={startCSSClassnames}>
-            <button type="button" onClick={this.onClickStart} className="container-buttons__grid-1-2__button button-start">
+            <button type="button" onClick={this.onClickStart} className="container-buttons__button button-start">
               {start ? 'Next' : 'Start'}
             </button>
           </div>
           { start &&
-          <div className="container-buttons__grid-1-2">
+          <div className="container-buttons centered grid-1-2">
             {paused ?
-              <button type="button" onClick={this.onClickPlay} className="container-buttons__grid-1-2__button button-play">
+              <button type="button" onClick={this.onClickPlay} className="container-buttons__button button-play">
                 Play
               </button> :
-              <button type="button" onClick={this.onClickPause} className="container-buttons__grid-1-2__button button-pause">
+              <button type="button" onClick={this.onClickPause} className="container-buttons__button button-pause">
                 Pause
               </button>
             }
@@ -86,13 +100,15 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     start: state.timerReducer.start,
-    paused: state.timerReducer.paused
+    paused: state.timerReducer.paused,
+    exceed: state.allottedTimeReducer.exceed
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(timerActions, dispatch)
+    timerActions: bindActionCreators(timerActions, dispatch),
+    allottedTimeActions: bindActionCreators(allottedTimeActions, dispatch)
   }
 };
 
