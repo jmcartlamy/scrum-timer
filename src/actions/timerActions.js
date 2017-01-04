@@ -1,4 +1,9 @@
-import { PLAY_TIMER, PAUSE_TIMER, START_TIMER } from '../constants/';
+import {
+  PLAY_TIMER,
+  PAUSE_TIMER,
+  START_TIMER
+
+} from '../constants/';
 
 export const startTimer = () => {
   return {
