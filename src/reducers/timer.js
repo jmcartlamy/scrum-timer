@@ -27,8 +27,8 @@ function timerReducer(state = initialState, action) {
       };
     default:
       return {
-        start: null,
-        paused: null
+        start: state.start,
+        paused: state.paused
       };
   }
 
