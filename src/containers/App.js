@@ -74,17 +74,17 @@ class App extends Component {
 
           <div className={startCSSClassnames}>
             <button type="button" onClick={this.onClickStart} className="container-buttons__button button-start">
-              {start ? 'Next' : 'Start'}
+              {start ? <i className="fa fa-user-plus" /> : <div>Start <i className="fa fa-clock-o" /></div> }
             </button>
           </div>
           { start &&
           <div className="container-buttons centered grid-1-2">
             {paused ?
               <button type="button" onClick={this.onClickPlay} className="container-buttons__button button-play">
-                Play
+                <i className="fa fa-play" />
               </button> :
               <button type="button" onClick={this.onClickPause} className="container-buttons__button button-pause">
-                Pause
+                <i className="fa fa-pause" />
               </button>
             }
           </div>

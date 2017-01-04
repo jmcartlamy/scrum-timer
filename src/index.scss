@@ -122,13 +122,17 @@ body {
     border-radius: 1rem;
     box-shadow: 0 8px 10px rgba(0,0,0,0.18);
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 3rem;
     height: 80%;
     position: relative;
     text-align: center;
     text-decoration: none;
     user-select: none;
     width: 80%;
+  }
+
+  &__button > .fa {
+    font-size: 5rem;
   }
 
   &__button:active {
