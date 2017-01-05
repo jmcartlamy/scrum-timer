@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import Sound from 'react-sound';
 import cs from 'classnames';
+
+import alarmSound from '../../sounds/alien-alarm.mp3';
 
 import { START_NUMBER_SECONDS } from '../constants/';
 
@@ -7,20 +10,40 @@ const START_MS = START_NUMBER_SECONDS * 1000;
 
 class Timer extends Component {
 
+  constructor() {
+    super();
+
+    this.state = {
+      playStatus: Sound.status.STOPPED
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { start, paused, exceeded } = this.props;
+    const { playStatus } = this.state;
 
     if (!exceeded && !paused && start && (+new Date() - START_MS) > start) {
       this.props.timerActions.exceedTime();
+      this.setState({playStatus: Sound.status.PLAYING});
     }
     else if(!prevProps.start && start) {
       this.tick();
+      this.setState({playStatus: Sound.status.STOPPED});
     }
-    else if(!prevProps.paused && paused) {
+    else if(prevProps.exceeded === true && exceeded === false && prevProps.start !== start) {
+      this.setState({playStatus: Sound.status.STOPPED});
+    }
+
+    if(!prevProps.paused && paused && playStatus === 'PLAYING') {
       clearInterval(this.updateComponent);
+      this.setState({playStatus: Sound.status.PAUSED});
     }
     else if(prevProps.paused && !paused) {
-      this.tick()
+      this.tick();
+      if (exceeded && playStatus === 'PAUSED') {
+        console.log('2', this.state.playStatus)
+        this.setState({playStatus: Sound.status.PLAYING});
+      }
     }
   }
 
@@ -78,6 +101,13 @@ class Timer extends Component {
             {this.renderOvertime()}
           </span>
         </div>
+        <Sound
+          url={alarmSound}
+          playFromPosition={0}
+          playStatus={this.state.playStatus}
+          onFinishedPlaying={() => this.setState({playStatus: Sound.status.STOPPED})}
+        />
+
       </div>
     )
   }

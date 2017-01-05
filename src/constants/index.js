@@ -4,4 +4,4 @@ export const START_TIMER = 'START_TIMER';
 
 export const EXCEED_TIME = 'EXCEED_TIME';
 
-export const START_NUMBER_SECONDS = 5;
+export const START_NUMBER_SECONDS = 60;
