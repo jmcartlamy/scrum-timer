@@ -1,7 +1,8 @@
 import {
   PLAY_TIMER,
   PAUSE_TIMER,
-  START_TIMER
+  START_TIMER,
+  EXCEED_TIME
 
 } from '../constants/';
 
@@ -29,5 +30,11 @@ export const pauseTimer = () => {
     payload: {
       date: +new Date()
     }
+  }
+};
+
+export const exceedTime = () => {
+  return {
+    type: EXCEED_TIME
   }
 };

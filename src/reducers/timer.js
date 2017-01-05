@@ -1,8 +1,9 @@
-import { PLAY_TIMER, PAUSE_TIMER, START_TIMER } from '../constants/';
+import { PLAY_TIMER, PAUSE_TIMER, START_TIMER, EXCEED_TIME } from '../constants/';
 
 export const initialState = {
   start: null,
-  paused: null
+  paused: null,
+  exceeded: false
 };
 
 function timerReducer(state = initialState, action) {
@@ -12,24 +13,28 @@ function timerReducer(state = initialState, action) {
     case START_TIMER:
       return {
         start: action.payload.date,
-        paused: null
+        paused: null,
+        exceeded: false
       };
     case PLAY_TIMER:
       const offset = state.paused - state.start;
       return {
+        ...state,
         start: action.payload.date - offset,
         paused: null
       };
     case PAUSE_TIMER:
       return {
-        start: state.start,
+        ...state,
         paused: action.payload.date
       };
-    default:
+    case EXCEED_TIME:
       return {
-        start: state.start,
-        paused: state.paused
+        ...state,
+        exceeded: true
       };
+    default:
+      return state;
   }
 
 }

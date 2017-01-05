@@ -3,15 +3,30 @@ import cs from 'classnames';
 
 import { START_NUMBER_SECONDS } from '../constants/';
 
+const START_MS = START_NUMBER_SECONDS * 1000;
+
 class Timer extends Component {
 
-  componentDidUpdate() {
-    const { allottedTimeActions, exceed } = this.props;
-    const remainingTime = this.remainingTime();
+  componentDidUpdate(prevProps) {
+    const { start, paused, exceeded } = this.props;
 
-    if (!exceed && remainingTime < 0) {
-      allottedTimeActions.exceedTime();
+    if (!exceeded && !paused && start && (+new Date() - START_MS) > start) {
+      this.props.timerActions.exceedTime();
     }
+    else if(!prevProps.start && start) {
+      this.tick();
+    }
+    else if(!prevProps.paused && paused) {
+      clearInterval(this.updateComponent);
+    }
+    else if(prevProps.paused && !paused) {
+      this.tick()
+    }
+  }
+
+  tick() {
+    clearInterval(this.updateComponent);
+    this.updateComponent = setInterval(this.forceUpdate.bind(this), 100);
   }
 
   remainingTime(accuracy = 1) {
@@ -22,7 +37,7 @@ class Timer extends Component {
       return START_NUMBER_SECONDS;
     }
     const date = paused || +new Date();
-    return Math.floor(
+    return Math.ceil(
         (START_NUMBER_SECONDS * accuracy) - ((date - start) / (1000 / accuracy))
       ) / accuracy;
   }
@@ -40,14 +55,14 @@ class Timer extends Component {
   }
 
   render() {
-    const { start, paused, exceed } = this.props;
+    const { start, paused, exceeded } = this.props;
 
     const textTimerCSSClassnames = cs(
       'container-timer__containerTime__time centered',
       {
-        'color-green': !paused && !exceed,
-        'color-yellow': paused && !exceed,
-        'color-red': exceed
+        'color-green': !paused && !exceeded,
+        'color-yellow': paused && !exceeded,
+        'color-red': exceeded
       }
     );
 
@@ -68,4 +83,4 @@ class Timer extends Component {
   }
 }
 
-export default Timer
+export default Timer;

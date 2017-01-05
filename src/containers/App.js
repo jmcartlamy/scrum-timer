@@ -6,47 +6,34 @@ import cs from 'classnames';
 
 import Timer from '../components/Timer.js';
 import * as timerActions from '../actions/timerActions.js';
-import * as allottedTimeActions from '../actions/allottedTimeActions.js';
 
 class App extends Component {
 
   constructor() {
     super();
 
-    this.tick = this.tick.bind(this);
     this.onClickStart = this.onClickStart.bind(this);
     this.onClickPause = this.onClickPause.bind(this);
     this.onClickPlay = this.onClickPlay.bind(this);
   }
 
-  tick() {
-    clearInterval(this.updateComponent);
-    this.updateComponent = setInterval(this.forceUpdate.bind(this), 100);
-  }
-
   onClickStart() {
-    const { timerActions, allottedTimeActions, exceed } = this.props;
+    const { timerActions } = this.props;
     timerActions.startTimer();
-    if (exceed) {
-      allottedTimeActions.resetTime();
-    }
-    this.tick();
   }
 
   onClickPlay() {
     const { timerActions } = this.props;
     timerActions.playTimer();
-    this.tick();
   }
 
   onClickPause() {
     const { timerActions } = this.props;
     timerActions.pauseTimer();
-    clearInterval(this.updateComponent);
   }
 
   render() {
-    const { start, paused, exceed } = this.props;
+    const { start, paused, exceeded } = this.props;
 
     const startCSSClassnames = cs(
       'container-buttons centered',
@@ -59,9 +46,9 @@ class App extends Component {
     const scrumAppCSSClassnames = cs(
       'scrum-app',
       {
-        'background-green': !paused && !exceed,
-        'background-yellow': paused && !exceed,
-        'background-red': exceed
+        'background-green': !paused && !exceeded,
+        'background-yellow': paused && !exceeded,
+        'background-red': exceeded
       }
     );
 
@@ -101,15 +88,14 @@ const mapStateToProps = (state) => {
   return {
     start: state.timerReducer.start,
     paused: state.timerReducer.paused,
-    exceed: state.allottedTimeReducer.exceed
-  }
+    exceeded: state.timerReducer.exceeded
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    timerActions: bindActionCreators(timerActions, dispatch),
-    allottedTimeActions: bindActionCreators(allottedTimeActions, dispatch)
-  }
+    timerActions: bindActionCreators(timerActions, dispatch)
+  };
 };
 
 export default connect(

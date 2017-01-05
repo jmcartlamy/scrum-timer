@@ -8,7 +8,8 @@ test('initial state', () => {
 test(START_TIMER, () => {
   const state = {
     start: null,
-    paused: null
+    paused: null,
+    exceeded: false
   };
 
   const action = {
@@ -22,7 +23,8 @@ test(START_TIMER, () => {
     timer(state, action)
   ).toEqual({
     start: action.payload.date,
-    paused: null
+    paused: null,
+    exceeded: false
   });
 });
 
