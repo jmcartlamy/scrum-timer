@@ -41,7 +41,6 @@ class Timer extends Component {
     else if(prevProps.paused && !paused) {
       this.tick();
       if (exceeded && playStatus === 'PAUSED') {
-        console.log('2', this.state.playStatus)
         this.setState({playStatus: Sound.status.PLAYING});
       }
     }
