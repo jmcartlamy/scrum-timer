@@ -41,7 +41,7 @@ class Timer extends Component {
     }
     else if(prevProps.paused && !paused) {
       this.tick();
-      if (+new Date() - startMs < start) {
+      if (+new Date() - startMs < start && prevProps.exceeded) {
         this.props.timerActions.clearExceedTime();
         this.setState({playStatus: Sound.status.STOPPED});
       }
@@ -71,9 +71,9 @@ class Timer extends Component {
   }
 
   onTimeHandler(e) {
-    const { exceeded, paused } = this.props;
+    const { start, paused } = this.props;
 
-    if (!exceeded || paused) {
+    if (paused || !start) {
       const value = e.target.value;
       this.props.timerActions.changeStartTime(value);
     }
@@ -128,7 +128,9 @@ class Timer extends Component {
               max="1800"
               className="container-timer__containerInputTime__inputTime"
               value={startNumberSeconds}
-              onChange={this.onTimeHandler} />
+              onChange={this.onTimeHandler}
+              disabled={(paused || !start) ? '' : 'disabled'}
+            />
           </div>
         }
         <div className="container-timer__containerOvertime centered">
