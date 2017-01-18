@@ -4,25 +4,26 @@ import cs from 'classnames';
 
 import alarmSound from '../../sounds/alien-alarm.mp3';
 
-import { START_NUMBER_SECONDS } from '../constants/';
-
-const START_MS = START_NUMBER_SECONDS * 1000;
-
 class Timer extends Component {
 
   constructor() {
     super();
 
+    this.onTimeHandler = this.onTimeHandler.bind(this);
+    this.onClickToggleInput = this.onClickToggleInput.bind(this);
+
     this.state = {
+      isInputVisible: false,
       playStatus: Sound.status.STOPPED
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { start, paused, exceeded } = this.props;
+    const { startNumberSeconds, start, paused, exceeded } = this.props;
     const { playStatus } = this.state;
+    const startMs = startNumberSeconds * 1000;
 
-    if (!exceeded && !paused && start && (+new Date() - START_MS) > start) {
+    if (!exceeded && !paused && start && (+new Date() - startMs) > start) {
       this.props.timerActions.exceedTime();
       this.setState({playStatus: Sound.status.PLAYING});
     }
@@ -53,15 +54,31 @@ class Timer extends Component {
 
   remainingTime(accuracy = 1) {
 
-    const { start, paused } = this.props;
+    const { startNumberSeconds, start, paused } = this.props;
 
     if (!start) {
-      return START_NUMBER_SECONDS;
+      return startNumberSeconds;
     }
+
     const date = paused || +new Date();
     return Math.ceil(
-        (START_NUMBER_SECONDS * accuracy) - ((date - start) / (1000 / accuracy))
+        (startNumberSeconds * accuracy) - ((date - start) / (1000 / accuracy))
       ) / accuracy;
+  }
+
+  onTimeHandler(e) {
+    const { exceeded, paused } = this.props;
+
+    if (!exceeded || paused) {
+      const value = e.target.value;
+      this.props.timerActions.changeStartTime(value);
+    }
+  }
+
+  onClickToggleInput() {
+    const { isInputVisible } = this.state;
+
+    this.setState({isInputVisible: !isInputVisible});
   }
 
   renderTime() {
@@ -77,7 +94,9 @@ class Timer extends Component {
   }
 
   render() {
-    const { start, paused, exceeded } = this.props;
+    const { startNumberSeconds, start, paused, exceeded } = this.props;
+
+    const { isInputVisible } = this.state;
 
     const textTimerCSSClassnames = cs(
       'container-timer__containerTime__time centered',
@@ -90,11 +109,24 @@ class Timer extends Component {
 
     return (
       <div className="container-timer">
-        <div className="container-timer__containerTime centered">
-          <span className={textTimerCSSClassnames}>
-            {!start ? START_NUMBER_SECONDS : this.renderTime()}
-          </span>
+        <div className="container-timer__containerTime centered" onClick={this.onClickToggleInput}>
+          <div
+            className={textTimerCSSClassnames}
+            type="number">
+            {!start ? startNumberSeconds : this.renderTime()}
+          </div>
         </div>
+        { isInputVisible &&
+          <div className="container-timer__containerInputTime centered">
+            <input
+              type="number"
+              min="3"
+              max="1800"
+              className="container-timer__containerInputTime__inputTime"
+              value={startNumberSeconds}
+              onChange={this.onTimeHandler} />
+          </div>
+        }
         <div className="container-timer__containerOvertime centered">
           <span className="container-timer__containerOvertime__overtime">
             {this.renderOvertime()}

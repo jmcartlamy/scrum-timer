@@ -84,7 +84,7 @@ body {
   height: 100%;
 
   &__containerTime {
-    height: 70%;
+    height: 65%;
     align-items: flex-end;
 
     &__time {
@@ -97,8 +97,24 @@ body {
       width: 25rem;
     }
   }
+
+  &__containerInputTime {
+    left: 0;
+    margin: 2rem auto;
+    position: absolute;
+    right: 0;
+
+    &__inputTime {
+      border-radius: 3rem;
+      font-size: 2rem;
+      min-height: 4rem;
+      min-width: 10rem;
+      text-align: center;
+    }
+  }
+
   &__containerOvertime {
-    height: 30%;
+    height: 35%;
 
     &__overtime {
       color: $overtime-text-color;

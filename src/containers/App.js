@@ -86,6 +86,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    startNumberSeconds: state.timerReducer.startNumberSeconds,
     start: state.timerReducer.start,
     paused: state.timerReducer.paused,
     exceeded: state.timerReducer.exceeded
