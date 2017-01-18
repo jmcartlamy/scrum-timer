@@ -3,8 +3,8 @@ import {
   PLAY_TIMER,
   PAUSE_TIMER,
   START_TIMER,
-  EXCEED_TIME
-
+  EXCEED_TIME,
+  CLEAR_EXCEED_TIME
 } from '../constants/';
 
 export const changeStartTime = inputNumber => {
@@ -47,5 +47,11 @@ export const pauseTimer = () => {
 export const exceedTime = () => {
   return {
     type: EXCEED_TIME
+  }
+};
+
+export const clearExceedTime = () => {
+  return {
+    type: CLEAR_EXCEED_TIME
   }
 };

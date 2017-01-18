@@ -4,6 +4,7 @@ import {
   PAUSE_TIMER,
   START_TIMER,
   EXCEED_TIME,
+  CLEAR_EXCEED_TIME
 } from '../constants/';
 
 export const initialState = {
@@ -45,6 +46,11 @@ function timerReducer(state = initialState, action) {
       return {
         ...state,
         exceeded: true
+      };
+    case CLEAR_EXCEED_TIME:
+      return {
+        ...state,
+        exceeded: false
       };
     default:
       return state;
