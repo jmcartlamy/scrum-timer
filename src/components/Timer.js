@@ -41,7 +41,11 @@ class Timer extends Component {
     }
     else if(prevProps.paused && !paused) {
       this.tick();
-      if (exceeded && playStatus === 'PAUSED') {
+      if (+new Date() - startMs < start) {
+        this.props.timerActions.clearExceedTime();
+        this.setState({playStatus: Sound.status.STOPPED});
+      }
+      else if (exceeded && playStatus === 'PAUSED') {
         this.setState({playStatus: Sound.status.PLAYING});
       }
     }
