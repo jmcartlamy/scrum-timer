@@ -1,5 +1,5 @@
-import timer, {initialState} from '../src/reducers/timer.js';
-import { PLAY_TIMER, PAUSE_TIMER, START_TIMER } from '../src/constants/';
+import timer, {initialState} from '../src/reducers/timerReducer.js';
+import { PLAY_TIMER, PAUSE_TIMER, START_TIMER, CHANGE_START_TIME } from '../src/constants/';
 
 test('initial state', () => {
   expect(timer(undefined, { type: 'AZERTY' })).toEqual(initialState);
@@ -69,5 +69,31 @@ test(PAUSE_TIMER, () => {
   ).toEqual({
     start: state.start,
     paused: action.payload.date
+  })
+});
+
+test(CHANGE_START_TIME, () => {
+  const state = {
+    startNumberSeconds: 60,
+    start: null,
+    paused: null,
+    exceeded: false
+  };
+  Object.freeze(state);
+
+  const action = {
+    type: CHANGE_START_TIME,
+    payload: {
+      input: 72
+    }
+  };
+
+  expect(
+      timer(state, action)
+  ).toEqual({
+    startNumberSeconds: 72,
+    start: null,
+    paused: null,
+    exceeded: false
   })
 });

@@ -1,10 +1,21 @@
 import {
+  CHANGE_START_TIME,
   PLAY_TIMER,
   PAUSE_TIMER,
   START_TIMER,
   EXCEED_TIME
 
 } from '../constants/';
+
+export const changeStartTime = inputNumber => {
+  return {
+    type: CHANGE_START_TIME,
+    payload: {
+      input: inputNumber
+    }
+  }
+};
+
 
 export const startTimer = () => {
   return {
