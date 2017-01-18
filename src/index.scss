@@ -14,6 +14,16 @@ $button-start-color: $color-blue;
 $button-play-color: $color-green;
 $button-pause-color: $color-yellow;
 
+$break-small-width: 320px;
+$break-medium-width: 560px;
+$break-large-width: 768px;
+$break-extra-large-width: 1200px;
+
+$break-small-height: 480px;
+$break-medium-height: 600px;
+$break-large-height: 800px;
+$break-extra-large-height: 1200px;
+
 * {
   border: 0;
   margin: 0;
@@ -84,8 +94,8 @@ body {
   height: 100%;
 
   &__containerTime {
-    height: 65%;
     align-items: flex-end;
+    height: 65%;
 
     &__time {
       background-color: $time-background-color;
@@ -95,12 +105,39 @@ body {
       font-size: 8rem;
       height: 25rem;
       width: 25rem;
+      @media screen and (max-width: $break-large-width) and (max-height: $break-medium-height) {
+        font-size: 7rem;
+        height: 20rem;
+        width: 20rem;
+      }
+      @media screen and (max-width: $break-large-width) and (max-height: $break-small-height) {
+        font-size: 7rem;
+        height: 90%;
+        width: 18rem;
+      }
+      @media screen and (min-width: $break-large-width) and (min-height: $break-large-height) {
+        font-size: 10rem;
+        height: 35rem;
+        width: 35rem;
+      }
+      @media screen and (min-width: $break-large-width) and (min-height: $break-extra-large-height) {
+        font-size: 13rem;
+        height: 50rem;
+        width: 50rem;
+      }
+
     }
   }
 
   &__containerInputTime {
     left: 0;
     margin: 2rem auto;
+    @media screen and (min-width: $break-large-width) and (min-height: $break-large-height) {
+      margin: 3rem auto;
+    }
+    @media screen and (min-width: $break-large-width) and (min-height: $break-extra-large-height) {
+      margin: 4rem auto;
+    }
     position: absolute;
     right: 0;
 
@@ -109,6 +146,16 @@ body {
       font-size: 2rem;
       min-height: 4rem;
       min-width: 10rem;
+      @media screen and (min-width: $break-large-width) and (min-height: $break-large-height) {
+        font-size: 3rem;
+        min-height: 5rem;
+        min-width: 12.5rem;
+      }
+      @media screen and (min-width: $break-large-width) and (min-height: $break-extra-large-height) {
+        font-size: 4rem;
+        min-height: 6rem;
+        min-width: 15rem;
+      }
       text-align: center;
     }
   }
@@ -119,6 +166,9 @@ body {
     &__overtime {
       color: $overtime-text-color;
       font-size: 2rem;
+      @media screen and (min-width: $break-large-width) and (min-height: $break-large-height) {
+        font-size: 2.5rem;
+      }
     }
   }
 }
@@ -139,6 +189,9 @@ body {
     box-shadow: 0 8px 10px rgba(0,0,0,0.18);
     cursor: pointer;
     font-size: 3rem;
+    @media screen and (min-width: $break-large-width) and (min-height: $break-large-height) {
+      font-size: 5rem;
+    }
     height: 80%;
     position: relative;
     text-align: center;
@@ -149,6 +202,9 @@ body {
 
   &__button > .fa {
     font-size: 4rem;
+    @media screen and (min-width: $break-large-width) and (min-height: $break-large-height) {
+      font-size: 6rem;
+    }
   }
 
   &__button:active {
