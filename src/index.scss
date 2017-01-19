@@ -20,7 +20,7 @@ $break-large-width: 768px;
 $break-extra-large-width: 1200px;
 
 $break-small-height: 480px;
-$break-medium-height: 600px;
+$break-medium-height: 580px;
 $break-large-height: 800px;
 $break-extra-large-height: 1200px;
 
@@ -110,6 +110,11 @@ body {
         height: 20rem;
         width: 20rem;
       }
+      @media screen and (max-width: $break-large-width) and (max-height: $break-medium-height) {
+        font-size: 7rem;
+        height: 20rem;
+        width: 20rem;
+      }
       @media screen and (max-width: $break-large-width) and (max-height: $break-small-height) {
         font-size: 7rem;
         height: 90%;
@@ -125,7 +130,7 @@ body {
         height: 50rem;
         width: 50rem;
       }
-
+      cursor: pointer;
     }
   }
 
