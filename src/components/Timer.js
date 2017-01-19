@@ -20,7 +20,7 @@ class Timer extends Component {
 
   componentDidUpdate(prevProps) {
     const { startNumberSeconds, start, paused, exceeded } = this.props;
-    const { playStatus } = this.state;
+    const { playStatus, isInputVisible } = this.state;
     const startMs = startNumberSeconds * 1000;
 
     if (!exceeded && !paused && start && (+new Date() - startMs) > start) {
@@ -48,6 +48,10 @@ class Timer extends Component {
       else if (exceeded && playStatus === 'PAUSED') {
         this.setState({playStatus: Sound.status.PLAYING});
       }
+    }
+
+    if ( isInputVisible ) {
+      this.inputTime.focus();
     }
   }
 
@@ -123,6 +127,7 @@ class Timer extends Component {
         { isInputVisible &&
           <div className="container-timer__containerInputTime centered">
             <input
+              ref={input => { this.inputTime = input} }
               type="number"
               min="3"
               max="1800"
