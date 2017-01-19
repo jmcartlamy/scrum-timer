@@ -28,6 +28,7 @@ class Timer extends Component {
       this.setState({playStatus: Sound.status.PLAYING});
     }
     else if(!prevProps.start && start) {
+      this.setState({isInputVisible: false});
       this.tick();
       this.setState({playStatus: Sound.status.STOPPED});
     }
@@ -40,6 +41,7 @@ class Timer extends Component {
       this.setState({playStatus: Sound.status.PAUSED});
     }
     else if(prevProps.paused && !paused) {
+      this.setState({isInputVisible: false});
       this.tick();
       if (+new Date() - startMs < start && prevProps.exceeded) {
         this.props.timerActions.clearExceedTime();
@@ -118,26 +120,26 @@ class Timer extends Component {
     return (
       <div className="container-timer">
         <div className="container-timer__containerTime centered" onClick={this.onClickToggleInput}>
-          <div
-            className={textTimerCSSClassnames}
-            type="number">
-            {!start ? startNumberSeconds : this.renderTime()}
-          </div>
-        </div>
-        { isInputVisible &&
-          <div className="container-timer__containerInputTime centered">
+        { isInputVisible ?
+
             <input
               ref={input => { this.inputTime = input} }
               type="number"
               min="3"
               max="1800"
-              className="container-timer__containerInputTime__inputTime"
+              className="container-timer__containerTime__time"
               value={startNumberSeconds}
               onChange={this.onTimeHandler}
               disabled={(paused || !start) ? '' : 'disabled'}
             />
+          :
+          <div
+            className={textTimerCSSClassnames}
+            type="number">
+            {!start ? startNumberSeconds : this.renderTime()}
           </div>
         }
+        </div>
         <div className="container-timer__containerOvertime centered">
           <span className="container-timer__containerOvertime__overtime">
             {this.renderOvertime()}

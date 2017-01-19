@@ -102,6 +102,7 @@ body {
       border: 1px solid #fff;
       border-radius: 50%;
       box-shadow: 0 8px 10px rgba(0, 0, 0, 0.18);
+      font-family: Arial, sans-serif;
       font-size: 8rem;
       height: 25rem;
       width: 25rem;
@@ -131,6 +132,17 @@ body {
         width: 50rem;
       }
       cursor: pointer;
+      text-align: center;
+    }
+
+    &__time::-webkit-outer-spin-button,
+    &__time::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &__time[type=number] {
+      -moz-appearance:textfield;
     }
   }
 
